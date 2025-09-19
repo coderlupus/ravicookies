@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-const BIN_URL = 'URL_DO_SEU_BIN_AQUI'; 
-const MASTER_KEY = 'SUA_MASTER_KEY_SECRETA_AQUI';
+const BIN_URL = 'https://api.jsonbin.io/v3/b/68cd54d5ae596e708ff3eb10'; 
+const MASTER_KEY = '$2a$10$iVCfs12P.OxYLKhQQqhZQesrqvoyTZ6Ix31anRczETaSBk245i.OW';
 
 // Define a estrutura de um item de estoque
 interface StockItem {
