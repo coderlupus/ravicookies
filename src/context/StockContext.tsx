@@ -1,5 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
+const BIN_URL = 'URL_DO_SEU_BIN_AQUI'; 
+const MASTER_KEY = 'SUA_MASTER_KEY_SECRETA_AQUI';
+
 // Define a estrutura de um item de estoque
 interface StockItem {
   stock: number;
@@ -10,6 +13,7 @@ interface StockContextType {
   stock: Record<string, StockItem>;
   getStock: (id: string) => number;
   decreaseStock: (id: string, quantity: number) => void;
+  setStockValue: (id: string, newStock: number) => void; // <--- ADICIONADO AQUI
 }
 
 // Cria o contexto
@@ -60,9 +64,18 @@ export const StockProvider = ({ children }: StockProviderProps) => {
     });
   };
 
+  // +++ FUNÇÃO ADICIONADA +++
+  // Função para definir um novo valor de estoque (para a página de admin)
+  const setStockValue = (id: string, newStock: number) => {
+    setStock(prevStock => ({
+      ...prevStock,
+      [id]: { ...prevStock[id], stock: Math.max(0, newStock) }, // Garante que não seja negativo
+    }));
+  };
+
   // Disponibiliza os valores para os componentes filhos
   return (
-    <StockContext.Provider value={{ stock, getStock, decreaseStock }}>
+    <StockContext.Provider value={{ stock, getStock, decreaseStock, setStockValue }}> {/* <--- ADICIONADO AQUI */}
       {children}
     </StockContext.Provider>
   );
