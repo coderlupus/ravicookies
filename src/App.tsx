@@ -6,8 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AdminPage from "./pages/Admin";
-import { StockProvider } from "./context/StockContext"; // 1. Importar os Provedores
+import { StockProvider } from "./context/StockContext";
 import { CartProvider } from "./context/CartContext";
+import ProtectedRoute from "./ProtectedRoute"; // Importe o componente
 
 const queryClient = new QueryClient();
 
@@ -16,13 +17,20 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      {/* 2. Colocar os Provedores aqui, para abraçar todas as rotas */}
       <StockProvider>
         <CartProvider>
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/admin" element={<AdminPage />} />
+              {/* Agora a rota /admin está envolvida pelo nosso componente de segurança */}
+              <Route 
+                path="/admin" 
+                element={
+                  <ProtectedRoute>
+                    <AdminPage />
+                  </ProtectedRoute>
+                } 
+              />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
