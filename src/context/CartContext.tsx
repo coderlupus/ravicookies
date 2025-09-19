@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { useStock } from './StockContext'; // 1. Importe o hook useStock que criamos
+import { useStock } from './StockContext';
 
 export interface CartItem {
   id: string;
@@ -37,7 +37,8 @@ interface CartProviderProps {
 
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [items, setItems] = useState<CartItem[]>([]);
-  const { getStock } = useStock(); // 2. Pegue a função getStock do contexto de estoque
+  // Pegamos TODAS as funções que precisamos do estoque
+  const { getStock, decreaseStock, increaseStock } = useStock();
 
   const calculateItemPrice = (item: CartItem) => {
     if (item.isMini) {
@@ -51,7 +52,6 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   };
 
   const addItem = (product: Omit<CartItem, 'quantity'>) => {
-    // 3. Lógica de verificação de estoque
     const currentStock = getStock(product.id);
     const itemInCart = items.find(item => item.id === product.id);
     const quantityInCart = itemInCart ? itemInCart.quantity : 0;
@@ -59,21 +59,23 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     const isMini = product.name.includes('Mini');
     const quantityToAdd = isMini ? 6 : 1;
 
-    // Verifica se a quantidade no carrinho somada à nova quantidade ultrapassa o estoque
     if (quantityInCart + quantityToAdd > currentStock) {
       console.error("Estoque insuficiente para adicionar o item:", product.name);
-      // Aqui você poderia usar o `toast` para avisar o usuário que não há mais estoque!
-      return; // Para a execução da função e não adiciona o item
+      return;
     }
 
+    // +++ CORREÇÃO IMPORTANTE +++
+    // Primeiro, damos baixa no estoque
+    decreaseStock(product.id, quantityToAdd);
+
+    // Depois, atualizamos o carrinho
     setItems(prev => {
       const existingItem = prev.find(item => item.id === product.id);
       
       if (existingItem) {
-        const newQuantity = existingItem.quantity + quantityToAdd;
         return prev.map(item =>
           item.id === product.id
-            ? { ...item, quantity: newQuantity }
+            ? { ...item, quantity: item.quantity + quantityToAdd }
             : item
         );
       }
@@ -83,41 +85,52 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   };
 
   const removeItem = (id: string) => {
+    const itemToRemove = items.find(item => item.id === id);
+    if (itemToRemove) {
+      // +++ CORREÇÃO IMPORTANTE +++
+      // Devolvemos a quantidade do item removido para o estoque
+      increaseStock(id, itemToRemove.quantity);
+    }
     setItems(prev => prev.filter(item => item.id !== id));
   };
 
-  const updateQuantity = (id: string, quantity: number) => {
-    if (quantity <= 0) {
+  const updateQuantity = (id: string, newQuantity: number) => {
+    const itemToUpdate = items.find(item => item.id === id);
+    if (!itemToUpdate) return;
+    
+    const oldQuantity = itemToUpdate.quantity;
+    const difference = newQuantity - oldQuantity;
+    const currentStock = getStock(id);
+
+    // Se a diferença necessária for maior que o estoque disponível, não faz nada
+    if (difference > currentStock) {
+      console.error("Não há estoque suficiente para aumentar para esta quantidade.");
+      return;
+    }
+
+    if (newQuantity <= 0) {
       removeItem(id);
       return;
     }
 
-    const currentStock = getStock(id);
-    if (quantity > currentStock) {
-        console.error("Não é possível atualizar para uma quantidade maior que o estoque.");
-        // Você também pode adicionar um toast de aviso aqui.
-        return; // Impede a atualização
+    // +++ CORREÇÃO IMPORTANTE +++
+    // Atualiza o estoque com base na diferença
+    if (difference > 0) {
+      decreaseStock(id, difference); // Diminui o estoque
+    } else if (difference < 0) {
+      increaseStock(id, -difference); // Aumenta o estoque
     }
     
     setItems(prev =>
-      prev.map(item => {
-        if (item.id === id) {
-          if (item.isMini) {
-            const adjustedQuantity = Math.max(6, Math.ceil(quantity / 6) * 6);
-            // Verifica novamente após o ajuste para múltiplos de 6
-            if (adjustedQuantity > currentStock) {
-                return item; // Retorna o item sem alteração se o ajuste ultrapassar o estoque
-            }
-            return { ...item, quantity: adjustedQuantity };
-          }
-          return { ...item, quantity };
-        }
-        return item;
-      })
+      prev.map(item => item.id === id ? { ...item, quantity: newQuantity } : item)
     );
   };
 
   const clearCart = () => {
+    // Devolve todos os itens para o estoque antes de limpar o carrinho
+    items.forEach(item => {
+      increaseStock(item.id, item.quantity);
+    });
     setItems([]);
   };
 

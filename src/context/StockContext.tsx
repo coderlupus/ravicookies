@@ -1,25 +1,23 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-const BIN_URL = 'https://api.jsonbin.io/v3/b/68cd54d5ae596e708ff3eb10'; 
-const MASTER_KEY = '$2a$10$iVCfs12P.OxYLKhQQqhZQesrqvoyTZ6Ix31anRczETaSBk245i.OW';
+// !! IMPORTANTE: Verifique se os seus dados do JSONBin.io estão corretos aqui !!
+const BIN_URL = 'URL_DO_SEU_BIN_AQUI'; // Cole sua URL aqui
+const MASTER_KEY = 'SUA_MASTER_KEY_SECRETA_AQUI'; // Cole sua chave aqui
 
-// Define a estrutura de um item de estoque
 interface StockItem {
   stock: number;
 }
 
-// Define o que nosso contexto vai fornecer
 interface StockContextType {
   stock: Record<string, StockItem>;
   getStock: (id: string) => number;
   decreaseStock: (id: string, quantity: number) => void;
-  setStockValue: (id: string, newStock: number) => void; // <--- ADICIONADO AQUI
+  increaseStock: (id: string, quantity: number) => void; // <--- ADICIONADO
+  setStockValue: (id: string, newStock: number) => void;
 }
 
-// Cria o contexto
 const StockContext = createContext<StockContextType | undefined>(undefined);
 
-// Cria um "atalho" (hook) para usar o contexto mais facilmente
 export const useStock = () => {
   const context = useContext(StockContext);
   if (!context) {
@@ -28,54 +26,63 @@ export const useStock = () => {
   return context;
 };
 
-// Define as propriedades que o nosso Provedor irá receber
 interface StockProviderProps {
   children: ReactNode;
 }
 
-// Cria o Provedor que vai "abraçar" nossa aplicação
 export const StockProvider = ({ children }: StockProviderProps) => {
-  // Onde vamos guardar os dados do estoque
   const [stock, setStock] = useState<Record<string, StockItem>>({});
 
-  // Este efeito roda uma vez quando o componente é montado
-  useEffect(() => {
-    // Busca os dados do nosso arquivo stock.json
-    fetch('/stock.json')
-      .then(response => response.json())
-      .then(data => setStock(data))
-      .catch(error => console.error('Erro ao buscar estoque:', error));
-  }, []); // O array vazio [] garante que isso rode só uma vez
-
-  // Função para pegar o estoque de um item pelo ID
-  const getStock = (id: string): number => {
-    return stock[id]?.stock ?? 0; // Retorna o estoque ou 0 se não encontrar
+  const updateStockOnServer = async (newStockData: Record<string, StockItem>) => {
+    try {
+      await fetch(BIN_URL, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Master-Key': MASTER_KEY
+        },
+        body: JSON.stringify(newStockData)
+      });
+    } catch (error) {
+      console.error('Falha ao atualizar o estoque no servidor:', error);
+    }
   };
 
-  // Função para diminuir o estoque (simulando uma venda)
+  useEffect(() => {
+    fetch(`${BIN_URL}/latest`)
+      .then(response => response.json())
+      .then(data => setStock(data.record))
+      .catch(error => console.error('Erro ao buscar estoque:', error));
+  }, []);
+
+  const getStock = (id: string): number => {
+    return stock[id]?.stock ?? 0;
+  };
+  
+  const setStockValue = (id: string, newStockValue: number) => {
+    const updatedStock = {
+      ...stock,
+      [id]: { ...stock[id], stock: Math.max(0, newStockValue) },
+    };
+    setStock(updatedStock);
+    updateStockOnServer(updatedStock);
+  };
+
   const decreaseStock = (id: string, quantity: number) => {
-    setStock(prevStock => {
-      const currentStock = prevStock[id]?.stock ?? 0;
-      const newStock = Math.max(0, currentStock - quantity); // Garante que o estoque não fique negativo
-      return {
-        ...prevStock,
-        [id]: { ...prevStock[id], stock: newStock },
-      };
-    });
+    const currentStock = getStock(id);
+    const newStock = currentStock - quantity;
+    setStockValue(id, newStock);
   };
 
   // +++ FUNÇÃO ADICIONADA +++
-  // Função para definir um novo valor de estoque (para a página de admin)
-  const setStockValue = (id: string, newStock: number) => {
-    setStock(prevStock => ({
-      ...prevStock,
-      [id]: { ...prevStock[id], stock: Math.max(0, newStock) }, // Garante que não seja negativo
-    }));
+  const increaseStock = (id: string, quantity: number) => {
+    const currentStock = getStock(id);
+    const newStock = currentStock + quantity;
+    setStockValue(id, newStock);
   };
 
-  // Disponibiliza os valores para os componentes filhos
   return (
-    <StockContext.Provider value={{ stock, getStock, decreaseStock, setStockValue }}> {/* <--- ADICIONADO AQUI */}
+    <StockContext.Provider value={{ stock, getStock, decreaseStock, increaseStock, setStockValue }}> {/* <--- ADICIONADO */}
       {children}
     </StockContext.Provider>
   );
