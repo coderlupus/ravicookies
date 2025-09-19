@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 // !! IMPORTANTE: Verifique se os seus dados do JSONBin.io estão corretos aqui !!
-const BIN_URL = 'URL_DO_SEU_BIN_AQUI'; // Cole sua URL aqui
-const MASTER_KEY = 'SUA_MASTER_KEY_SECRETA_AQUI'; // Cole sua chave aqui
+const BIN_URL = import.meta.env.VITE_JSONBIN_URL;
+const MASTER_KEY = import.meta.env.VITE_JSONBIN_MASTER_KEY;
 
 interface StockItem {
   stock: number;
