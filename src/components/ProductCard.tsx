@@ -1,8 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Heart, ShoppingCart, Star } from "lucide-react";
+import { Heart, ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/hooks/use-toast";
+import { useStock } from "@/context/StockContext"; // 1. Importe o hook de estoque
 
 interface ProductCardProps {
   id: string;
@@ -15,9 +16,23 @@ interface ProductCardProps {
 
 const ProductCard = ({ id, name, description, price, priceInfo, image }: ProductCardProps) => {
   const { addItem } = useCart();
+  const { getStock } = useStock(); // 2. Pegue a função getStock do contexto
   const { toast } = useToast();
 
+  const currentStock = getStock(id); // 3. Obtenha o estoque atual do produto
+  const isOutOfStock = currentStock <= 0; // 4. Verifique se está esgotado
+
   const handleAddToCart = () => {
+    // 5. Adicione uma verificação antes de adicionar ao carrinho
+    if (isOutOfStock) {
+      toast({
+        title: "Produto Esgotado",
+        description: "Este item não está mais disponível em estoque.",
+        variant: "destructive",
+      });
+      return; // Para a execução da função aqui
+    }
+
     const isMini = name.includes('Mini');
     addItem({ id, name, price, image });
     const toastResult = toast({
@@ -42,6 +57,12 @@ const ProductCard = ({ id, name, description, price, priceInfo, image }: Product
           alt={name}
           className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
         />
+        {/* 6. Adicione um aviso visual de "Esgotado" */}
+        {isOutOfStock && (
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+            <span className="text-white font-bold text-lg">Esgotado</span>
+          </div>
+        )}
         <Button 
           variant="ghost" 
           size="icon" 
@@ -73,9 +94,10 @@ const ProductCard = ({ id, name, description, price, priceInfo, image }: Product
           <Button 
             className="flex-1 bg-gradient-golden hover:bg-cookie-caramel text-white shadow-soft"
             onClick={handleAddToCart}
+            disabled={isOutOfStock} // 7. Desabilite o botão se estiver esgotado
           >
             <ShoppingCart className="w-4 h-4 mr-2" />
-            Adicionar
+            {isOutOfStock ? "Esgotado" : "Adicionar"}
           </Button>
           <Button variant="outline" className="border-cookie-caramel text-cookie-caramel hover:bg-cookie-caramel hover:text-white px-3 py-2 min-w-[80px]">
             Ver mais
