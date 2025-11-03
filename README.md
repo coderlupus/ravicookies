@@ -1,81 +1,92 @@
-# Projeto Ravicookies
+# 🍪 Ravicookies Project
 
-Este projeto foi desenvolvido com a ajuda do **Lovable**, uma ferramenta que facilita a criação de aplicações modernas.
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000000?style=for-the-badge&logo=npm&logoColor=white)
 
----
-
-## Tecnologias Utilizadas
-
-Este projeto utiliza as seguintes tecnologias:
-
-- **Vite**: Ferramenta de build rápida para desenvolvimento web.
-- **TypeScript**: Superset do JavaScript que adiciona tipagem estática.
-- **React**: Biblioteca para construção de interfaces de usuário.
-- **shadcn-ui**: Componentes acessíveis e estilizados para React.
-- **Tailwind CSS**: Framework de CSS utilitário para estilização rápida.
+This project was developed with the help of **Lovable**, a tool that facilitates the creation of modern applications.
 
 ---
 
-## Como Executar o Projeto Localmente
+## 🛠️ Technologies Used
 
-Siga os passos abaixo para rodar o projeto em sua máquina:
+This project utilizes the following technologies:
 
-1. **Clone o repositório**:
-   ```sh
-   git clone <URL_DO_SEU_REPOSITORIO>
-   ```
-
-2. **Navegue até o diretório do projeto**:
-   ```sh
-   cd <NOME_DO_SEU_PROJETO>
-   ```
-
-3. **Instale as dependências necessárias**:
-   ```sh
-   npm i
-   ```
-
-4. **Inicie o servidor de desenvolvimento**:
-   ```sh
-   npm run dev
-   ```
+* **Vite**: A fast build tool for web development.
+* **TypeScript**: A superset of JavaScript that adds static typing.
+* **React**: A library for building user interfaces.
+* **shadcn-ui**: Accessible and styled components for React.
+* **Tailwind CSS**: A utility-first CSS framework for rapid styling.
 
 ---
 
-## Como Editar Este Código?
+## 🚀 How to Run the Project Locally
 
-**Usar seu IDE preferido**
+Follow the steps below to run the project on your machine:
 
-Se você deseja trabalhar localmente usando seu próprio IDE, pode clonar este repositório e enviar as alterações. As mudanças enviadas também serão refletidas no Lovable.
+1.  **Clone the repository**:
+    ```sh
+    git clone <YOUR_REPOSITORY_URL>
+    ```
 
-A única exigência é ter o Node.js e npm instalados - [instalar com nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+2.  **Navigate to the project directory**:
+    ```sh
+    cd <YOUR_PROJECT_NAME>
+    ```
 
-Siga os passos:
+3.  **Install the necessary dependencies**:
+    ```sh
+    npm i
+    ```
+
+4.  **Start the development server**:
+    ```sh
+    npm run dev
+    ```
+
+---
+
+## 💻 How to Edit This Code?
+
+### Using your preferred IDE
+
+If you want to work locally using your own IDE, you can clone this repository and push your changes. Changes you push will also be reflected in Lovable.
+
+The only requirement is to have Node.js and npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+
+Follow the steps:
 
 ```sh
-# Passo 1: Clone o repositório usando a URL Git do projeto.
-git clone <SUA_URL_GIT>
+# Step 1: Clone the repository using the project's Git URL.
+git clone <YOUR_GIT_URL>
 
-# Passo 2: Navegue até o diretório do projeto.
-cd <NOME_DO_SEU_PROJETO>
+# Step 2: Navigate to the project directory.
+cd <YOUR_PROJECT_NAME>
 
-# Passo 3: Instale as dependências necessárias.
+# Step 3: Install the necessary dependencies.
 npm i
 
-# Passo 4: Inicie o servidor de desenvolvimento com recarregamento automático e uma prévia instantânea.
+# Step 4: Start the development server with automatic reloading and an instant preview.
 npm run dev
-```
 
-**Editar um arquivo diretamente no GitHub**
+### Editing a file directly on GitHub
 
-- Navegue até o(s) arquivo(s) desejado(s).
-- Clique no botão "Editar" (ícone de lápis) no canto superior direito da visualização do arquivo.
-- Faça suas alterações e confirme as mudanças.
+# Navigate to the desired file(s).
 
-**Usar GitHub Codespaces**
+# Click the "Edit" button (pencil icon) on the top right corner of the file view.
 
-- Navegue até a página principal do seu repositório.
-- Clique no botão "Code" (botão verde) perto do canto superior direito.
-- Selecione a aba "Codespaces".
-- Clique em "New codespace" para iniciar um novo ambiente Codespace.
-- Edite os arquivos diretamente dentro do Codespace e confirme e envie suas alterações assim que terminar.
+# Make your changes and commit the modifications.
+
+### Using GitHub Codespaces
+
+# Navigate to the main page of your repository.
+
+# Click the "Code" button (green button) near the top right corner.
+
+# Select the "Codespaces" tab.
+
+# Click "New codespace" to launch a new Codespace environment.
+
+# Edit the files directly within the Codespace and commit and push your changes when done.
