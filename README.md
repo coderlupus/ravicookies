@@ -1,30 +1,43 @@
-# 🍪 Ravicookies Project
+# 🍪 Ravicookies Project: Modern Web Application Template
 
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000000?style=for-the-badge&logo=npm&logoColor=white)
+<p align="center">
+  <img src="./public/placeholder.svg" alt="Ravicookies Logo Placeholder" width="150"/>
+</p>
 
-This project was developed with the help of **Lovable**, a tool that facilitates the creation of modern applications.
-
----
-
-## 🛠️ Technologies Used
-
-This project utilizes the following technologies:
-
-* **Vite**: A fast build tool for web development.
-* **TypeScript**: A superset of JavaScript that adds static typing.
-* **React**: A library for building user interfaces.
-* **shadcn-ui**: Accessible and styled components for React.
-* **Tailwind CSS**: A utility-first CSS framework for rapid styling.
+![Vite](https://img.shields.io/badge/Vite-5.4.19-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.17-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-Powered-000000?style=for-the-badge&logo=npm&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 ---
 
-## 🚀 How to Run the Project Locally
+## 📝 Description
 
-Follow the steps below to run the project on your machine:
+### What it does (O que faz)
+This project serves as a highly functional and modern web application template or boilerplate. It provides a strong foundation with pre-configured tools for building scalable and type-safe user interfaces.
+
+### Built With (Com o que foi construído)
+The application is built using a modern and popular frontend stack:
+* **Vite**: The build tool and development server, ensuring fast development cycles.
+* **React**: The core library for constructing the user interface.
+* **TypeScript**: Provides static typing for improved code quality and maintainability.
+* **Tailwind CSS**: Used for all utility-first styling.
+* **shadcn-ui**: A collection of accessible and reusable components built on Radix UI.
+
+### Why it was built (Por que foi construído)
+The project was developed with the assistance of **Lovable**, a tool aimed at facilitating the creation of modern applications. It serves as an optimized starting point for new projects requiring a high-quality frontend setup.
+
+---
+
+## ⚙️ Installation Instructions
+
+### Prerequisites (Pré-requisitos)
+You must have **Node.js** and **npm** (or a compatible package manager like Yarn or pnpm) installed on your system.
+
+### Steps
+Follow these steps to get a local copy up and running:
 
 1.  **Clone the repository**:
     ```sh
@@ -36,62 +49,44 @@ Follow the steps below to run the project on your machine:
     cd <YOUR_PROJECT_NAME>
     ```
 
-3.  **Install the necessary dependencies**:
+3.  **Install dependencies**:
     ```sh
-    npm i
-    ```
-
-4.  **Start the development server**:
-    ```sh
-    npm run dev
+    npm install
+    # or npm i
     ```
 
 ---
 
-## 💻 How to Edit This Code?
+## 🎮 Usage Instructions
 
-### Using your preferred IDE
-
-If you want to work locally using your own IDE, you can clone this repository and push your changes. Changes you push will also be reflected in Lovable.
-
-The only requirement is to have Node.js and npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-Follow the steps:
-
+### Start Local Development Server
+To start the development server with Hot Module Replacement (HMR):
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+npm run dev
+Build for Production
+To create an optimized production bundle:
+
+Bash
+
+npm run build
+The compiled files will be located in the dist directory.
+
+Editing Workflow
+The recommended way to work is by cloning the repository and using your preferred IDE, as pushes will be reflected in external tools like Lovable:
+
+Bash
+
+# Clone the repository using the project's Git URL.
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
+# Navigate to the project directory.
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
+# Install the necessary dependencies.
 npm i
 
-# Step 4: Start the development server with automatic reloading and an instant preview.
+# Start the development server.
 npm run dev
-```
+📃 License
+This project is licensed under the MIT License.
 
----
-
-### Editing a file directly on GitHub
-
-Navigate to the desired file(s).
-
-Click the "Edit" button (pencil icon) on the top right corner of the file view.
-
-Make your changes and commit the modifications.
-
----
-
-### Using GitHub Codespaces
-
-Navigate to the main page of your repository.
-
-Click the "Code" button (green button) near the top right corner.
-
-Select the "Codespaces" tab.
-
-Click "New codespace" to launch a new Codespace environment.
-
-Edit the files directly within the Codespace and commit and push your changes when done.
