@@ -71,6 +71,8 @@ npm i
 # Step 4: Start the development server with automatic reloading and an instant preview.
 npm run dev
 
+---
+
 ### Editing a file directly on GitHub
 
 # Navigate to the desired file(s).
@@ -78,6 +80,8 @@ npm run dev
 # Click the "Edit" button (pencil icon) on the top right corner of the file view.
 
 # Make your changes and commit the modifications.
+
+---
 
 ### Using GitHub Codespaces
 
