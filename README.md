@@ -70,27 +70,28 @@ npm i
 
 # Step 4: Start the development server with automatic reloading and an instant preview.
 npm run dev
+```
 
 ---
 
 ### Editing a file directly on GitHub
 
-# Navigate to the desired file(s).
+Navigate to the desired file(s).
 
-# Click the "Edit" button (pencil icon) on the top right corner of the file view.
+Click the "Edit" button (pencil icon) on the top right corner of the file view.
 
-# Make your changes and commit the modifications.
+Make your changes and commit the modifications.
 
 ---
 
 ### Using GitHub Codespaces
 
-# Navigate to the main page of your repository.
+Navigate to the main page of your repository.
 
-# Click the "Code" button (green button) near the top right corner.
+Click the "Code" button (green button) near the top right corner.
 
-# Select the "Codespaces" tab.
+Select the "Codespaces" tab.
 
-# Click "New codespace" to launch a new Codespace environment.
+Click "New codespace" to launch a new Codespace environment.
 
-# Edit the files directly within the Codespace and commit and push your changes when done.
+Edit the files directly within the Codespace and commit and push your changes when done.
